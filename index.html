@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GSE Incident Reporting</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">GSE<span>✹</span></div>
+        <small>SAFETY SYSTEM</small>
+      </div>
+
+      <nav class="nav">
+        <a href="#" class="nav-item active"><span class="nav-icon">⌂</span><span>Overview</span></a>
+        <a href="#report" class="nav-item"><span class="nav-icon">＋</span><span>Report Incident</span></a>
+        <a href="#reports" class="nav-item"><span class="nav-icon">▤</span><span>Incident Records</span></a>
+        <a href="#" class="nav-item"><span class="nav-icon">◫</span><span>Investigation</span></a>
+        <a href="#" class="nav-item"><span class="nav-icon">✓</span><span>Corrective Action</span></a>
+      </nav>
+
+      <div class="sidebar-card">
+        <div class="shield">◇</div>
+        <strong>Safety starts with reporting.</strong>
+        <p>Report every incident accurately and promptly.</p>
+      </div>
+
+      <div class="user-mini">
+        <div class="avatar">HY</div>
+        <div><strong>GSE User</strong><small>Operational System</small></div>
+        <span>›</span>
+      </div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">GSE SAFETY & COMPLIANCE</p>
+          <h1>Incident Reporting</h1>
+          <p class="subtitle">Record, classify and track ground support equipment incidents.</p>
+        </div>
+        <div class="top-actions">
+          <button class="icon-btn" aria-label="Notifications">♢<span class="dot"></span></button>
+          <button class="primary-btn" onclick="document.getElementById('report').scrollIntoView({behavior:'smooth'})">＋ Report Incident</button>
+        </div>
+      </header>
+
+      <section class="stats-grid">
+        <article class="stat-card">
+          <div class="stat-icon red">!</div>
+          <div><span>Total Incidents</span><strong>24</strong><small>Current period</small></div>
+          <div class="trend">+3</div>
+        </article>
+        <article class="stat-card">
+          <div class="stat-icon amber">◷</div>
+          <div><span>Under Review</span><strong>06</strong><small>Require follow-up</small></div>
+        </article>
+        <article class="stat-card">
+          <div class="stat-icon blue">⌁</div>
+          <div><span>Corrective Action</span><strong>04</strong><small>In progress</small></div>
+        </article>
+        <article class="stat-card">
+          <div class="stat-icon green">✓</div>
+          <div><span>Closed</span><strong>14</strong><small>Verified cases</small></div>
+        </article>
+      </section>
+
+      <section class="workspace">
+        <div class="form-card" id="report">
+          <div class="card-heading">
+            <div>
+              <span class="section-tag">NEW REPORT</span>
+              <h2>Report an Incident</h2>
+              <p>Complete the information below. Fields marked * are required.</p>
+            </div>
+            <div class="incident-number">
+              <span>INCIDENT ID</span>
+              <strong id="incidentIdDisplay">Generating...</strong>
+            </div>
+          </div>
+
+          <div class="steps">
+            <div class="step active"><b>1</b><span>General</span></div>
+            <div class="line"></div>
+            <div class="step"><b>2</b><span>Equipment</span></div>
+            <div class="line"></div>
+            <div class="step"><b>3</b><span>Impact</span></div>
+            <div class="line"></div>
+            <div class="step"><b>4</b><span>Details</span></div>
+          </div>
+
+          <form id="incidentForm">
+            <input type="hidden" name="incidentId" id="incidentId">
+
+            <div class="form-section">
+              <div class="section-title">
+                <div class="section-icon">01</div>
+                <div><h3>General Information</h3><p>When and where did the incident occur?</p></div>
+              </div>
+
+              <div class="form-grid">
+                <label class="field">
+                  <span>Date & Time <em>*</em></span>
+                  <input type="datetime-local" id="incidentDateTime" name="incidentDateTime" required>
+                </label>
+
+                <label class="field">
+                  <span>Reporter ID <em>*</em></span>
+                  <input type="text" name="reporterId" placeholder="e.g. 240185" required>
+                </label>
+
+                <div class="field station-field">
+                  <span>Station <em>*</em></span>
+                  <div class="station-combobox">
+                    <input type="text" id="stationSearch" placeholder="Search station code or city..." autocomplete="off" aria-expanded="false">
+                    <input type="hidden" id="station" name="station">
+                    <div class="station-options" id="stationOptions"></div>
+                  </div>
+                  <small>Type CGK, Surabaya, DPS, etc.</small>
+                </div>
+
+                <label class="field">
+                  <span>Exact Location / Parking Stand</span>
+                  <input type="text" name="location" placeholder="e.g. Terminal 1, Stand E21">
+                </label>
+              </div>
+            </div>
+
+            <div class="form-section">
+              <div class="section-title">
+                <div class="section-icon">02</div>
+                <div><h3>Equipment Information</h3><p>Identify the equipment involved.</p></div>
+              </div>
+
+              <div class="form-grid three">
+                <label class="field">
+                  <span>Equipment Code <em>*</em></span>
+                  <select name="equipmentCode" required>
+                    <option value="">Select code</option>
+                    <option>BTT</option><option>ATT</option><option>GPU</option>
+                    <option>ASU</option><option>ACU</option><option>BL</option>
+                    <option>PS</option><option>TRACTOR</option><option>TLD</option>
+                    <option>OTHER</option>
+                  </select>
+                </label>
+
+                <label class="field">
+                  <span>Equipment Registration <em>*</em></span>
+                  <input type="text" name="equipmentRegistration" placeholder="e.g. GPU 001 JT" required>
+                </label>
+
+                <label class="field">
+                  <span>GSE ID <i>Optional</i></span>
+                  <input type="text" name="gseId" placeholder="Internal GSE ID">
+                </label>
+              </div>
+
+              <div class="form-grid">
+                <label class="field">
+                  <span>Flight Number</span>
+                  <input type="text" name="flightNumber" placeholder="e.g. JT 610">
+                </label>
+                <label class="field">
+                  <span>Aircraft Registration</span>
+                  <input type="text" name="aircraftRegistration" placeholder="e.g. PK-Lxx">
+                </label>
+              </div>
+            </div>
+
+            <div class="form-section">
+              <div class="section-title">
+                <div class="section-icon">03</div>
+                <div><h3>Incident Classification & Impact</h3><p>Select the severity and affected areas.</p></div>
+              </div>
+
+              <div class="severity-wrap">
+                <span class="group-label">Severity Level <em>*</em></span>
+                <div class="severity-grid">
+                  <label class="severity low"><input type="radio" name="severity" value="Low" required><span><b>Low</b><small>Minor / no disruption</small></span></label>
+                  <label class="severity medium"><input type="radio" name="severity" value="Medium"><span><b>Medium</b><small>Limited disruption</small></span></label>
+                  <label class="severity high"><input type="radio" name="severity" value="High"><span><b>High</b><small>Major impact</small></span></label>
+                  <label class="severity critical"><input type="radio" name="severity" value="Critical"><span><b>Critical</b><small>Serious / immediate</small></span></label>
+                </div>
+              </div>
+
+              <span class="group-label impact-label">Incident Impact</span>
+              <div class="impact-grid">
+                <label class="impact-card"><input type="checkbox" name="aircraftDamage"><span class="impact-icon">✈</span><span><b>Aircraft Damage</b><small>Damage involving aircraft</small></span><span class="check">✓</span></label>
+                <label class="impact-card"><input type="checkbox" name="gseDamage"><span class="impact-icon">▣</span><span><b>GSE Damage</b><small>Equipment damaged</small></span><span class="check">✓</span></label>
+                <label class="impact-card"><input type="checkbox" name="injury"><span class="impact-icon">＋</span><span><b>Personnel Injury</b><small>Injury or medical case</small></span><span class="check">✓</span></label>
+                <label class="impact-card"><input type="checkbox" name="operationalDisruption"><span class="impact-icon">◷</span><span><b>Operational Disruption</b><small>Delay or operation affected</small></span><span class="check">✓</span></label>
+              </div>
+            </div>
+
+            <div class="form-section">
+              <div class="section-title">
+                <div class="section-icon">04</div>
+                <div><h3>Incident Details</h3><p>Describe what happened and the immediate response.</p></div>
+              </div>
+
+              <label class="field full">
+                <span>Incident Chronology <em>*</em></span>
+                <textarea name="chronology" rows="6" placeholder="Describe the sequence of events clearly: what happened, where, who was involved, and what condition was observed..." required></textarea>
+                <small class="helper">Use factual information and chronological order.</small>
+              </label>
+
+              <label class="field full">
+                <span>Immediate Action Taken <em>*</em></span>
+                <textarea name="immediateAction" rows="4" placeholder="Describe containment, equipment isolation, notification, first aid, or other immediate actions..." required></textarea>
+              </label>
+            </div>
+
+            <div class="form-actions">
+              <div class="save-note"><span>●</span> Draft is stored locally during this session</div>
+              <div>
+                <button type="button" class="secondary-btn" id="resetForm">Clear Form</button>
+                <button type="submit" class="submit-btn">Submit Incident <span>→</span></button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <aside class="right-panel" id="reports">
+          <div class="panel-card">
+            <div class="panel-heading"><div><span class="section-tag">LIVE STATUS</span><h3>Recent Incidents</h3></div><button>View all</button></div>
+            <div class="incident-list">
+              <div class="incident-item"><div class="mini-icon">!</div><div><strong>INC-GSE-1024</strong><span>BTT • CGK • E11</span></div><span class="status review">Review</span></div>
+              <div class="incident-item"><div class="mini-icon">!</div><div><strong>INC-GSE-1023</strong><span>GPU • SUB • A04</span></div><span class="status action">Action</span></div>
+              <div class="incident-item"><div class="mini-icon">✓</div><div><strong>INC-GSE-1022</strong><span>ATT • DPS • B12</span></div><span class="status closed">Closed</span></div>
+              <div class="incident-item"><div class="mini-icon">✓</div><div><strong>INC-GSE-1021</strong><span>ACU • KNO • C07</span></div><span class="status closed">Closed</span></div>
+            </div>
+          </div>
+
+          <div class="safety-banner">
+            <div>
+              <span>GSE SAFETY</span>
+              <h3>Report Today.<br>Prevent Tomorrow.</h3>
+              <p>Accurate reporting builds safer ground operations.</p>
+            </div>
+            <div class="banner-art">GSE</div>
+          </div>
+
+          <div class="panel-card quick">
+            <h3>Reporting Guide</h3>
+            <div><b>01</b><span><strong>Secure the area</strong><small>Ensure immediate operational safety.</small></span></div>
+            <div><b>02</b><span><strong>Record the facts</strong><small>Capture accurate incident information.</small></span></div>
+            <div><b>03</b><span><strong>Submit promptly</strong><small>Allow investigation to begin quickly.</small></span></div>
+          </div>
+        </aside>
+      </section>
+    </main>
+  </div>
+
+  <nav class="mobile-nav">
+    <a href="#" class="active"><b>⌂</b><span>Home</span></a>
+    <a href="#report"><b>＋</b><span>Report</span></a>
+    <a href="#reports"><b>▤</b><span>Records</span></a>
+    <a href="#"><b>♢</b><span>Alerts</span></a>
+    <a href="#"><b>○</b><span>Profile</span></a>
+  </nav>
+
+  <script src="script.js"></script>
+</body>
+</html>
